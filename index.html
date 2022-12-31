@@ -8,10 +8,10 @@
 <body>
 <div class="container">
     <h1 class="mt-3">なちほカルタ</h1>
-    <div class="card"><div class="card-body>現在<span id="current">1</span>/<span id="total">0</span></div></div>
-    <div>
-        <button class="btn btn-outline-primary" id="playButton">再生する</button>
-        <button class="btn btn-outline-secondary" id="resetButton">リセットする</button>
+    <div class="card shadow-sm mb-3"><div class="card-body">現在<span id="current">1</span>/<span id="total">0</span></div></div>
+    <div class="d-inline-block w-100">
+        <button class="btn btn-lg btn-outline-primary shadow-sm h-50 w-50 me-5" id="playButton">再生する</button>
+        <button class="btn btn-outline-secondary shadow-sm h-50" id="resetButton">リセットする</button>
     </div>
 </div>
 
@@ -40,31 +40,39 @@
             const j = Math.floor(Math.random() * (i + 1)); // 0 から i のランダムなインデックス
             [array[i], array[j]] = [array[j], array[i]]; // 要素を入れ替えます
         }
-    }        
+    }
+
+    var _current = 0;
+    function setCurrent(current) {
+        _current = current;
+        document.getElementById('current').textContent = `${current + 1}`;
+    }
+
+    function nextCurrent() {
+        setCurrent((_current + 1) % soundfiles.length);
+    }
 
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('total').innerText = `${soundfiles.length}`;
-        var i = 0;
         shuffle(soundfiles);
 
         const playButton = document.getElementById('playButton');
         playButton.addEventListener('click', () => {
             playButton.setAttribute('disabled', true);
 
-            const sound = new Audio(`./assets/${soundfiles[i]}.m4a`);
+            const sound = new Audio(`./assets/${soundfiles[_current]}.m4a`);
             sound.addEventListener('ended', () => {
                 playButton.removeAttribute('disabled');
-                i += 1 % soundfiles.length;
-                document.getElementById('current').innerText = `${i + 1}`;
+                nextCurrent();
             });
             sound.play();
         });
 
         const resetButton = document.getElementById('resetButton');
         resetButton.addEventListener('click', () => {
-            if (window.confirm('再生位置をリセットしますか？')) {
-                i = 0;
-                document.getElementById('current').innerText = `${i + 1}`;
+            if (window.confirm('リセットしますか？')) {
+                setCurrent(0);
+                shuffle(soundfiles);
             }
         });
     }, false);
