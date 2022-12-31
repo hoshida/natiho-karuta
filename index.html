@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>なちほカルタ</title>
+</head>
+<body>
+    <button id="playButton">再生する</button>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('playButton').addEventListener('click', () => {
+                console.log("test");
+                const sound = new Audio(`./assets/a.m4a`);
+                sound.play();
+            });
+        }, false);
+
+        /*
+        $(function () {
+            $("#playbutton").on("click", function () {
+                const letter = displayLetter($(this));
+                playSound(letter);
+            });
+
+            const height = $(window).height();
+            $("#root").height(height);
+
+            const displayHeight = $("#display-container").height();
+            $("#display").css("font-size", `${displayHeight * 0.6}px`);
+
+            displayLetter($("#startButton"));
+        });
+
+        function displayLetter($btn) {
+            const letter = $btn.text();
+            $("#display").text(letter);
+            const className = $btn.attr('class');
+            const colorName = className.substr(className.indexOf('btn-outline-')).substr(12);
+            $("#display").attr('class', '');
+            $("#display").addClass("text-" + colorName);
+            return letter;
+        }
+
+        const sounds = {};
+        function playSound(letter) {
+            letter = letter.toLowerCase();
+            if (sounds[letter] == null) {
+                sounds[letter] = new Audio(`./assets/sounds/alphabet/alphabet02_${letter}_01.wav`);
+            }
+            sounds[letter].play();
+        }
+        */
+    </script>
+</body>
+</html>
